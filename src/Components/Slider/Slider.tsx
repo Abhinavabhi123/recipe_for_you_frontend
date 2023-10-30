@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
+type Slides={
+    url:string;
+}[]
 
 export default function Slider() {
-  const slides = [
+  const slides:Slides = [
     {
       url: "/slider/slider1.jpeg",
     },
@@ -23,14 +26,14 @@ export default function Slider() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const prevSlide = () => {
-    const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
+    const isFirstSlide:boolean = currentIndex === 0;
+    const newIndex:number = isFirstSlide ? slides.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
   };
 
   const nextSlide = () => {
-    const isLastSlide = currentIndex === slides.length - 1;
-    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    const isLastSlide:boolean = currentIndex === slides.length - 1;
+    const newIndex:number = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
 

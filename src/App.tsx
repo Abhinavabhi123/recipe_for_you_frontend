@@ -1,13 +1,18 @@
 import "./App.css";
-import Navbar from "./Components/Navbar/Navbar";
-import Slider from "./Components/Slider/Slider";
+import {BrowserRouter as Router,Routes,Route}from "react-router-dom"
+import Client from "./Routes/Client";
+// import Navbar from "./Components/Navbar/Navbar";
+// import Slider from "./Components/Slider/Slider";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Slider />
-    </>
+    <Router>
+     <Routes>
+       <Route path="/*" element={<Client/>}/>
+     </Routes>
+    </Router>
+   </>
   );
 }
 
