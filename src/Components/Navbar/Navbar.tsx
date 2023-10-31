@@ -40,11 +40,25 @@ export default function Navbar() {
       <div
         className={`${
           open ? "flex" : "hidden"
-        } w-[50%] min-w-32 h-20 bg-red-500 absolute right-0 top-20 z-2 md:hidden` }
+        } w-[50%] min-w-32 h-20 bg-red-500 absolute right-0 top-20 z-2 md:hidden`}
       >
         <ul className="flex w-full flex-col items-center justify-center bg-">
-          <li className="cursor-pointer text-white">HOME</li>
-          <li className="cursor-pointer" onClick={() => navigate("/products")}>
+          <li
+            className="cursor-pointer text-white"
+            onClick={() => {
+              navigate("/");
+              setOpen(false);
+            }}
+          >
+            HOME
+          </li>
+          <li
+            className="cursor-pointer"
+            onClick={() => {
+              navigate("/products");
+              setOpen(false);
+            }}
+          >
             PRODUCTS
           </li>
           <li className="cursor-pointer">
