@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "../ProductCard/Card";
 import Spinner from "../Loader/Spinner";
-import {getAllProducts} from "../../API/recipeApi.js"
+import { getAllProducts } from "../../API/recipeApi.js";
+import Filter from "../Filter_Seciton/Filter.js";
+import Input from "../SearchInput/Input.js";
 
 type Results = {
   id: number;
@@ -143,40 +145,37 @@ export default function AllProducts() {
     setTimeout(() => {
       setLoading(false);
     }, 5000);
-    setResult(results)
+    setResult(results);
     setProducts(results);
   }, []);
-  useEffect(() => {
-    try {
-  setLoading(true);
-      console.log(import.meta.env.SERVER_URL);
-      axios
-        .get(`${import.meta.env.VITE_SERVER_URL}getRecipe`)
-        .then((response) => {
-  if(response.data){
-    console.log(response.data.results);
-    setProducts(response.data.results);
-    setLoading(false);
-  }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-  // const searchHandler = (search: string) => {
-  //   const result:Results = results.filter((item) => item.title.includes(search));
-  //   result ? setResult(result) : setResult(results);
-  // };
+  // useEffect(() => {
+  //   try {
+  // setLoading(true);
+  //     console.log(import.meta.env.SERVER_URL);
+  //     axios
+  //       .get(`${import.meta.env.VITE_SERVER_URL}getRecipe`)
+  //       .then((response) => {
+  // if(response.data){
+  //   console.log(response.data.results);
+  //   setProducts(response.data.results);
+  //   setLoading(false);
+  // }
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, []);
+  // Searching contents
   const searchHandler = (search: string) => {
     const result = filterData(results, search);
     result ? setResult(result) : setResult(products);
   };
-  const filterData = (data:Results, searchString:string) => {
-    const regex = new RegExp(searchString, 'i');
-    return data.filter(item => regex.test(item.title));
+  const filterData = (data: Results, searchString: string) => {
+    const regex = new RegExp(searchString, "i");
+    return data.filter((item) => regex.test(item.title));
   };
 
   return (
@@ -195,23 +194,15 @@ export default function AllProducts() {
         </div>
         {/* Searching */}
         <div className="flex justify-center items-center gap-3">
-          <input
-            type="text"
-            className="w-[70%] md:w-[20rem] h-8 rounded-md p-4 border border-black focus:outline-none"
-            placeholder="Search Products..."
-            onChange={(e) => {
-              searchHandler(e.target.value);
-            }}
-          />
-
+          <Input searchHandler={searchHandler}/>
         </div>
       </div>
       <div className="w-full  bg-yellow- flex  ">
-        <div className="h-[30rem] hidden sm:block md:w-44 w-20 lg:w-72 bg-blue-400"></div>
+        <Filter />
         {loading ? (
           <Spinner />
         ) : (
-          <div className="h-full md:w-[82%] w-full md:gap-6 bg-trans grid m-auto p-10 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="h-full md:w-[82%] w-full md:gap-6 bg-trans grid m-auto p-10 grid-cols-1 gap-4 min-[409px]:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {result.map((product, index) => (
               <Card key={index} values={product} />
             ))}

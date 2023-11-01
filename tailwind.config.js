@@ -4,9 +4,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#ccbdfd',
+        primary: "#ccbdfd",
       },
-    }
+      keyframes: {
+        sideBar: {
+          '0%': { transform: 'translateX(0)' },    
+          '100%': { transform: 'translateX(-100%)' },  
+        },
+      },
+      sideBarAnimation: {
+        'side-bar': 'sideBar 2s linear infinite',
+      }
+    },
   },
   plugins: [],
 };

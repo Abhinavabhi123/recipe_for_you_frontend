@@ -2,6 +2,7 @@ import { useState } from "react";
 import person from "../../assets/person.png";
 import { useNavigate } from "react-router-dom";
 import { IoMdMenu } from "react-icons/io";
+import Login from "../Login/Login";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -31,11 +32,12 @@ export default function Navbar() {
           PRODUCTS
         </li>
         <li className="cursor-pointer">
-          <img src={`${person}`} className="w-9" alt="person logo" />
+          {/* <img src={`${person}`} className="w-9" alt="person logo" /> */}
+          <Login/>
         </li>
       </ul>
       <div className="flex md:hidden" onClick={menuHandler}>
-        <IoMdMenu />
+        <IoMdMenu size={20}/>
       </div>
       <div
         className={`${
