@@ -32,6 +32,8 @@ const Authentication = ({ children }: AuthenticationProps) => {
           image: cookieData?.image,
         })
       );
+      console.log(cookieData?.image);
+      
     }
   }, [cookie, dispatch]);
 

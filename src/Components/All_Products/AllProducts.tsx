@@ -5,6 +5,7 @@ import Spinner from "../Loader/Spinner";
 // import { getAllProducts } from "../../API/recipeApi.js";
 import Filter from "../Filter_Seciton/Filter.js";
 import Input from "../SearchInput/Input.js";
+import Empty from "../../assets/Recipe book-pana.svg";
 
 type Results = {
   id: number;
@@ -194,7 +195,7 @@ export default function AllProducts() {
         </div>
         {/* Searching */}
         <div className="flex justify-center items-center gap-3">
-          <Input searchHandler={searchHandler}/>
+          <Input searchHandler={searchHandler} />
         </div>
       </div>
       <div className="w-full  bg-yellow- flex  ">
@@ -202,10 +203,16 @@ export default function AllProducts() {
         {loading ? (
           <Spinner />
         ) : (
-          <div className="h-full md:w-[82%] w-full md:gap-6 bg-trans grid m-auto p-10 grid-cols-1 gap-4 min-[409px]:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {result.map((product, index) => (
-              <Card key={index} values={product} />
-            ))}
+          <div className="h-full  md:w-[82%] w-full md:gap-6 bg-trans grid m-auto p-10 grid-cols-1 gap-4 min-[409px]:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {result.length > 0 ? (
+              result.map((product, index) => (
+                <Card key={index} values={product} />
+              ))
+            ) : (
+              <div className="w-[82%]  h-full flex justify-center  bg-red-400 items-center">
+                <img className="w-96 h-auto" src={Empty} alt="no data" />
+              </div>
+            )}
           </div>
         )}
       </div>

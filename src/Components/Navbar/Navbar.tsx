@@ -40,7 +40,7 @@ export default function Navbar() {
     setLoginOpen(!loginOpen);
   };
   const closeButton = () => {
-    setLogout(!logout);
+    setLogout(prev=>!prev);
   };
   const logoutHandler = () => {
     Cookies.remove("jwtToken");
