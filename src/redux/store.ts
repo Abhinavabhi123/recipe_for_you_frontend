@@ -6,4 +6,4 @@ const store = configureStore({
     reducer: userAuth,
   });
   
-  export default store;
+  export default store; 

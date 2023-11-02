@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import Card from "../ProductCard/Card";
 import Spinner from "../Loader/Spinner";
-import { getAllProducts } from "../../API/recipeApi.js";
+// import { getAllProducts } from "../../API/recipeApi.js";
 import Filter from "../Filter_Seciton/Filter.js";
 import Input from "../SearchInput/Input.js";
 

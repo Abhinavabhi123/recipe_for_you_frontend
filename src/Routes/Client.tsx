@@ -1,18 +1,21 @@
-import React from 'react'
-import { Routes, Route  } from "react-router-dom";
-import Navbar from '../Components/Navbar/Navbar';
-import Home from '../Pages/Home';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "../Components/Navbar/Navbar";
+import Home from "../Pages/Home";
 
-import Products from '../Pages/Products';
+import Products from "../Pages/Products";
+import Authentication from "../Middleware/AuthMiddleware";
 
 export default function Client() {
   return (
     <div>
-      <Navbar/>
-      <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/products' element={<Products/>}/>
-      </Routes>
+      <Navbar />
+      <Authentication>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+        </Routes>
+      </Authentication>
     </div>
-  )
+  );
 }
