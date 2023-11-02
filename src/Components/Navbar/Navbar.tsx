@@ -7,9 +7,15 @@ import Login from "../Login/Login";
 export default function Navbar() {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
+  const [loginOpen, setLoginOpen] = useState<boolean>(false);
 
   const menuHandler = () => {
     setOpen(!open);
+  };
+  const showLogin = () => {
+    console.log("Clicked");
+
+    setLoginOpen(!loginOpen);
   };
   return (
     <div className="w-full h-20 bg-primary flex items-center  justify-between px-8 drop-shadow-md">
@@ -31,13 +37,18 @@ export default function Navbar() {
         >
           PRODUCTS
         </li>
-        <li className="cursor-pointer">
-          {/* <img src={`${person}`} className="w-9" alt="person logo" /> */}
-          <Login/>
+        <li className="cursor-pointer" onClick={showLogin}>
+          <button
+            type="button"
+            className="bg-violet-400 px-3 py-1 rounded-md hover:bg-violet-700 hover:text-white"
+          >
+            Login
+          </button>
+          {loginOpen && <Login />}
         </li>
       </ul>
       <div className="flex md:hidden" onClick={menuHandler}>
-        <IoMdMenu size={20}/>
+        <IoMdMenu size={20} />
       </div>
       <div
         className={`${
