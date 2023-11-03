@@ -1,21 +1,24 @@
 import { axiosInstance ,userInstance } from "../utils/axios";
+import UserAxios from "../utils/intercepter";
 
 interface UserData {
   name: string;
   email: string;
   image: string;
 }
-// interface RecipeId{
-//   id:number
-// }
-const getAllProducts=() =>{
+
+
+export const getAllProducts=() =>{
     return axiosInstance.get("/getRecipe")
 }
-const UserLogin = (data:UserData)=>{
+export const UserLogin = (data:UserData)=>{
     return userInstance.post('/userLogin', data);
 }
-const getRecipe=(id:number)=>{
+export const getRecipe=(id:number)=>{
   return axiosInstance.get(`/getRecipe/${id}`)
 }
+export const addFavorite =(id:number,userId:string)=>{
+  return UserAxios.post("/addRecipeFav",{id,userId})
+}
 
-export{getAllProducts,UserLogin,getRecipe}
+// export{getAllProducts,UserLogin,getRecipe}

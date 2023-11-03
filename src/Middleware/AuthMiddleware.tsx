@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import { userActions } from "../redux/userAuth";
 
 interface AuthenticationProps {
@@ -12,18 +13,18 @@ export interface DecodedToken {
   name: string;
   email: string;
   image: string;
+  recipe: string[];
 }
 
 const Authentication = ({ children }: AuthenticationProps) => {
   const cookie: string | undefined = Cookies.get("jwtToken");
-  console.log(cookie, "gg");
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
-    if (cookie) {
+    if (cookie !== undefined) {
       const cookieData = jwtDecode(cookie) as DecodedToken;
-      console.log(cookieData, "kookie");
       dispatch(
         userActions.userAddDetails({
           id: cookieData?._id,
@@ -32,10 +33,21 @@ const Authentication = ({ children }: AuthenticationProps) => {
           image: cookieData?.image,
         })
       );
-      console.log(cookieData?.image);
-      
+    } else {
+      switch (location.pathname) {
+        case "/":
+          navigate("/");
+          break;
+
+        case "/recipes":
+          navigate("/recipes");
+          break;
+
+        default:
+          navigate("/");
+      }
     }
-  }, [cookie, dispatch]);
+  }, [cookie, dispatch, location.pathname, navigate]);
 
   return <>{children}</>;
 };

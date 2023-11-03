@@ -18,7 +18,7 @@ export type Args = {
   id: "",
   email: "",
   userName: "",
-  image: "",
+  image: ""
 };
 
 const userAuth = createSlice({
@@ -36,6 +36,8 @@ const userAuth = createSlice({
       const newItem = actions.payload;
       state.userName = newItem.userName;
       state.email = newItem.email;
+      state.id = newItem.id;
+      state.image=newItem.image;
     },
   },
 });

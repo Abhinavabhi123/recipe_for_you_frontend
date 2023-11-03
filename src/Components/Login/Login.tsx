@@ -16,11 +16,12 @@ interface UserData {
 }
 interface LoginClose {
   setLoginClose: React.Dispatch<React.SetStateAction<boolean>>;
+  setLogout: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 type DecodedType = { [key: string]: string };
 
-export default function Login({ setLoginClose }: LoginClose) {
+export default function Login({ setLoginClose,setLogout }: LoginClose) {
   const [userData, setUserData] = useState<UserData>({
     name: "",
     email: "",
@@ -31,13 +32,15 @@ export default function Login({ setLoginClose }: LoginClose) {
     if (Object.values(userData).some((value) => value !== "")) {
       UserLogin(userData).then((response) => {
         if (response?.status === 200) {
+          setLogout(false);
           showSuccessToast(response?.data?.message);
-          console.log(response, "res");
+          console.log(response.data,"data");
+          
+          localStorage.setItem("recipes",response?.data?.userData?.recipes)
           setLoginClose(true);
           const cookieData = jwtDecode(
             response?.data?.jwtToken
           ) as DecodedToken;
-          console.log(cookieData, "kookie");
           dispatch(
             userActions.userAddDetails({
               id: cookieData?._id,

@@ -1,6 +1,10 @@
 import { FiHeart } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Recipe_Modal from "../Modal/Recipe_Modal";
+import Cookies from "js-cookie";
+import { addFavorite } from "../../API/recipeApi";
+import { useSelector } from "react-redux";
+import { Args } from "../../redux/userAuth";
 
 export type Values = {
   values: {
@@ -11,10 +15,48 @@ export type Values = {
 };
 
 export default function Card({ values }: Values) {
-  window.scrollTo(0, 0);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const addToFav = (id: number) => {
-    console.log("Clicked", id);
+  const [favorite, setFavorite] = useState<boolean>(false);
+  const [changed, setChanged] = useState<boolean>(false);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  useEffect(() => {
+    const favoriteRecipes = localStorage.getItem("recipes");
+    if (favoriteRecipes) {
+      const recipeArray: string[] = favoriteRecipes
+        .replace(/"/g, "")
+        .split(",");
+      recipeArray.map((item) => {
+        if (Number(item) == values.id) {
+          setFavorite(true);
+        }
+      });
+    }
+  }, [changed, values.id]);
+
+  const userId = useSelector((state: Args) => {
+    return state.id;
+  });
+  const addToFav = async (id: number) => {
+    const cookie: string | undefined = Cookies.get("jwtToken");
+    if (cookie) {
+      addFavorite(id, userId)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data, "popop");
+            localStorage.setItem("recipes", response?.data?.recipes);
+          }
+        })
+        .then(() => {
+          setChanged(!changed);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      console.log("not");
+    }
   };
 
   const modalHandler = () => {
@@ -23,13 +65,17 @@ export default function Card({ values }: Values) {
 
   return !openModal ? (
     <div className="w-full h-auto gap-4 p-4 md:h-84 bg-white rounded-lg shadow-sm shadow-gray-500 flex flex-col justify-around items-center px-4">
-      <div className="flex justify-end w-full">
-        <FiHeart
-          onClick={() => {
-            addToFav(values?.id);
-          }}
-          className="text-red-500 text-lg hover:fill-current hover:text-red-500"
-        />
+      <div className="flex justify-end w-full h-10">
+        {!favorite ? (
+          <FiHeart
+            onClick={() => {
+              addToFav(values?.id);
+            }}
+            className="text-red-500 text-lg me-1 hover:fill-current hover:text-xl ease-in-out duration-300 hover:text-red-500"
+          />
+        ) : (
+          <FiHeart className="text-red-500 text-lg fill-current hover:text-red-500" />
+        )}
       </div>
       <img
         src={values?.image}

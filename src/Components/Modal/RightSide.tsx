@@ -19,7 +19,7 @@ export default function RightSide({ ingredients, instructions }: Values) {
         <p className="text-lg font-semibold underline">Ingredients</p>
         <div className="grid md:grid-cols-2 ">
           {ingredients.map((item, index) => (
-            <p className="text-xs md:text-sm" key={index}>{`${item.name} : ${item.amount}${item.unit}`}</p>
+            <p className="text-xs md:text-sm" key={index}>{`${item.name} : ${item.amount} ${item.unit}`}</p>
           ))}
         </div>
       </div>

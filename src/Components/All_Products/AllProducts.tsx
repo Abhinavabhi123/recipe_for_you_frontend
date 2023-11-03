@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 // import axios from "axios";
 import Card from "../ProductCard/Card";
 import Spinner from "../Loader/Spinner";
-import { getAllProducts } from "../../API/recipeApi.js";
+// import { getAllProducts } from "../../API/recipeApi.js";
 import Filter from "../Filter_Seciton/Filter.js";
 import Input from "../SearchInput/Input.js";
 import Empty from "../../assets/Recipe book-pana.svg";
@@ -140,7 +140,7 @@ export default function AllProducts() {
   const [products, setProducts] = useState<Results>([]);
   const [result, setResult] = useState<Results>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [search, setSearch] = useState<string>("");
+  // const [search, setSearch] = useState<string>("");
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
@@ -150,24 +150,24 @@ export default function AllProducts() {
     setProducts(results);
   }, []);
   useEffect(() => {
-    try {
-      setLoading(true);
-      console.log(import.meta.env.SERVER_URL);
-      getAllProducts()
-        .then((response) => {
-          if (response.data) {
-            console.log(response.data.results);
-            setProducts(response.data.results);
-            setResult(response.data.results);
-            setLoading(false);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } catch (error) {
-      console.error(error);
-    }
+    // try {
+    //   setLoading(true);
+    //   console.log(import.meta.env.SERVER_URL);
+    //   getAllProducts()
+    //     .then((response) => {
+    //       if (response.data) {
+    //         console.log(response.data.results);
+    //         setProducts(response.data.results);
+    //         setResult(response.data.results);
+    //         setLoading(false);
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    // } catch (error) {
+    //   console.error(error);
+    // }
   }, []);
   // Searching contents
   const searchHandler = (search: string) => {
@@ -178,6 +178,7 @@ export default function AllProducts() {
     const regex = new RegExp(searchString, "i");
     return data.filter((item) => regex.test(item.title));
   };
+
 
   return (
     <div>
@@ -197,20 +198,25 @@ export default function AllProducts() {
         <div className="flex justify-center items-center gap-3">
           <Input searchHandler={searchHandler} />
         </div>
+        {/*  */}
       </div>
       <div className="w-full min-h-[30rem]  bg-transparent flex  ">
         <Filter />
         {loading ? (
           <Spinner />
         ) : (
-          <div className="h-full  md:w-[82%] w-full md:gap-6 bg-trans grid m-auto p-10 grid-cols-1 gap-4 min-[409px]:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="h-full relative  md:w-[82%] w-full md:gap-6 bg-trans grid m-auto p-10 grid-cols-1 gap-4 min-[409px]:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {result.length > 0 ? (
               result.map((product, index) => (
                 <Card key={index} values={product} />
               ))
             ) : (
-              <div className="w-[82%]  h-full flex justify-center  bg-red-400 items-center">
-                <img className="w-96 h-auto" src={Empty} alt="no data" />
+              <div className="w-full absolute  h-full flex justify-center items-center">
+                <img
+                  className="w-52 md:w-96 h-auto"
+                  src={Empty}
+                  alt="no data"
+                />
               </div>
             )}
           </div>

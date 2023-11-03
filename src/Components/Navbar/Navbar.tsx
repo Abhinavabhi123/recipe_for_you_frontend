@@ -40,7 +40,7 @@ export default function Navbar() {
     setLoginOpen(!loginOpen);
   };
   const closeButton = () => {
-    setLogout(prev=>!prev);
+    setLogout((prev) => !prev);
   };
   const logoutHandler = () => {
     Cookies.remove("jwtToken");
@@ -52,6 +52,8 @@ export default function Navbar() {
         image: "",
       })
     );
+    navigate("/")
+    setLogout(false);
   };
 
   return (
@@ -70,7 +72,7 @@ export default function Navbar() {
         </li>
         <li
           className="cursor-pointer font-serif p-2 rounded-md hover:bg-slate-200"
-          onClick={() => navigate("/products")}
+          onClick={() => navigate("/recipes")}
         >
           RECIPES
         </li>
@@ -83,28 +85,47 @@ export default function Navbar() {
               Login
             </button>
             {loginOpen && !loginClose && (
-              <Login setLoginClose={setLoginClose} />
+              <Login setLoginClose={setLoginClose} setLogout={setLogout} />
             )}
           </li>
         ) : (
           <>
             <button type="button">
-              <img
-                className=" w-10 rounded-full"
-                src={`${userData?.image}`}
-                alt="image"
-                onClick={closeButton}
-              />
+              {userData.image ? (
+                <img
+                  className=" w-10 rounded-full"
+                  src={`${userData.image}`}
+                  alt="image"
+                  onClick={closeButton}
+                />
+              ) : (
+                ""
+              )}
             </button>
             {logout && (
-              <div className="absolute right-7 flex items-center justify-center rounded-md top-16 w-28 h-10 bg-slate-200">
-                <button
-                  type="button"
-                  className="bg-slate-300 px-2 hover:bg-slate-400  p-1 rounded-md"
-                  onClick={logoutHandler}
-                >
-                  Logout
-                </button>
+              <div className="absolute right-7 rounded-md top-16 w-28 h-20 flex items-center justify-center  bg-slate-200">
+                <ul className="flex w-full items-center flex-col gap-2 justify-center text-center ">
+                  <li className="hover:bg-slate-300 w-full">
+                    <button
+                      className=" px-2  p-1 rounded-md"
+                      onClick={() => {
+                        navigate("/profile");
+                        setLogout(false);
+                      }}
+                    >
+                      Profile
+                    </button>
+                  </li>
+                  <li className="hover:bg-slate-300 w-full">
+                    <button
+                      type="button"
+                      className=" px-2  p-1 rounded-md"
+                      onClick={logoutHandler}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
               </div>
             )}
           </>
@@ -131,7 +152,7 @@ export default function Navbar() {
           <li
             className="cursor-pointer w-full  text-center"
             onClick={() => {
-              navigate("/products");
+              navigate("/recipes");
               setOpen(false);
             }}
           >
