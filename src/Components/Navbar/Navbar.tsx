@@ -55,7 +55,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="w-full h-20 bg-primary flex items-center  justify-between px-8 drop-shadow-md">
+    <div className=" w-full h-20 bg-primary flex items-center  justify-between px-8 drop-shadow-md">
       <img
         src="https://icon-library.com/images/recipe-icon-png/recipe-icon-png-8.jpg"
         className="w-16 h-auto cursor-pointer"
@@ -72,7 +72,7 @@ export default function Navbar() {
           className="cursor-pointer font-serif p-2 rounded-md hover:bg-slate-200"
           onClick={() => navigate("/products")}
         >
-          PRODUCTS
+          RECIPES
         </li>
         {!userData.email ? (
           <li className="cursor-pointer" onClick={showLogin}>
@@ -135,7 +135,7 @@ export default function Navbar() {
               setOpen(false);
             }}
           >
-            PRODUCTS
+            RECIPES
           </li>
           {!userData.email ? (
             <li className="cursor-pointer">

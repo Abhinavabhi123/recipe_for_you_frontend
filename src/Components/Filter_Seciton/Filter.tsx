@@ -15,7 +15,7 @@ export default function Filter() {
     //   open ? "absolute" : "relative"
     // }
     <div
-      className={`h-[30rem] hidden sm:block md:w-44 w-16 lg:w-72  rounded-br-md bg-slate-200 ps-5 sm:p-1 p-7`}
+      className={`h-[30rem]  hidden sm:block md:w-44 w-16 lg:w-72  rounded-br-md bg-slate-200 ps-5 sm:p-1 p-7`}
     >
       <div
         className="md:hidden block hover:bg-slate-300 p-2 rounded-md ps-4"

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 // import axios from "axios";
 import Card from "../ProductCard/Card";
 import Spinner from "../Loader/Spinner";
-// import { getAllProducts } from "../../API/recipeApi.js";
+import { getAllProducts } from "../../API/recipeApi.js";
 import Filter from "../Filter_Seciton/Filter.js";
 import Input from "../SearchInput/Input.js";
 import Empty from "../../assets/Recipe book-pana.svg";
@@ -140,7 +140,7 @@ export default function AllProducts() {
   const [products, setProducts] = useState<Results>([]);
   const [result, setResult] = useState<Results>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  // const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
@@ -149,26 +149,26 @@ export default function AllProducts() {
     setResult(results);
     setProducts(results);
   }, []);
-  // useEffect(() => {
-  //   try {
-  // setLoading(true);
-  //     console.log(import.meta.env.SERVER_URL);
-  //     axios
-  //       .get(`${import.meta.env.VITE_SERVER_URL}getRecipe`)
-  //       .then((response) => {
-  // if(response.data){
-  //   console.log(response.data.results);
-  //   setProducts(response.data.results);
-  //   setLoading(false);
-  // }
-  //       })
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }, []);
+  useEffect(() => {
+    try {
+      setLoading(true);
+      console.log(import.meta.env.SERVER_URL);
+      getAllProducts()
+        .then((response) => {
+          if (response.data) {
+            console.log(response.data.results);
+            setProducts(response.data.results);
+            setResult(response.data.results);
+            setLoading(false);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
   // Searching contents
   const searchHandler = (search: string) => {
     const result = filterData(results, search);
@@ -181,7 +181,7 @@ export default function AllProducts() {
 
   return (
     <div>
-      <div className="w-full h-20 bg-green- flex items-center border-b justify-around">
+      <div className=" h-20 flex items-center border-b justify-around">
         <div className="  gap-3 hidden sm:flex">
           <p>Sort :</p>
           <select className="rounded-sm w-44 border-2 border-black group">
@@ -198,7 +198,7 @@ export default function AllProducts() {
           <Input searchHandler={searchHandler} />
         </div>
       </div>
-      <div className="w-full  bg-yellow- flex  ">
+      <div className="w-full min-h-[30rem]  bg-transparent flex  ">
         <Filter />
         {loading ? (
           <Spinner />
