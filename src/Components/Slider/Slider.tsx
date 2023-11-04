@@ -60,7 +60,7 @@ export default function Slider() {
         <div className="flex top-4 justify-center py-2">
           {slides.map((slide, slideIndex) => (
             <div
-              key={slideIndex}
+              key={`${slideIndex}${slide}`}
               onClick={() => goToSlide(slideIndex)}
               className="text-2xl cursor-pointer"
             >
