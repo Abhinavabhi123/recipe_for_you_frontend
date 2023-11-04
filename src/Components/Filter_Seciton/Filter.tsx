@@ -15,6 +15,8 @@ interface Props {
 export default function Filter({ setResult, results }: Props) {
   const [open, setOpen] = useState<boolean>(false);
   const favRecipe = localStorage.getItem("recipes");
+  const [data,setData] = useState<Results>([])
+  
 
   const sideBarOpen = () => {
     setOpen(!open);
@@ -22,15 +24,16 @@ export default function Filter({ setResult, results }: Props) {
   const [selectedOption, setSelectedOption] = useState("");
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setData(results)
     if (favRecipe) {
       const arr = favRecipe.split(",");
       if (event?.target?.value === "option1") {
-        const matchingData = results.filter((item) =>
+        const matchingData = data.filter((item) =>
           arr.includes(item.id.toString())
         );
         setResult(matchingData);
-      } else {
-        const nonMatchingData = results.filter(
+      } else if(event?.target?.value === "option2") {
+        const nonMatchingData = data.filter(
           (item) => !arr.includes(item.id.toString())
         );
         setResult(nonMatchingData);
