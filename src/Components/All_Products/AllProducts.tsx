@@ -8,7 +8,7 @@ import Input from "../SearchInput/Input.js";
 import Empty from "../../assets/Recipe book-pana.svg";
 // import Pagination from "../Pagination/Pagination.js";
 
-type Results = {
+export type Results = {
   id: number;
   title: string;
   image: string;
@@ -237,7 +237,7 @@ export default function AllProducts() {
         {result.length > 0 && <Pagination />}
       </div> */}
       <div className="w-full min-h-[30rem]  bg-transparent flex  ">
-        <Filter />
+        <Filter  results={results} setResult={setResult}/>
         {loading ? (
           <Spinner />
         ) : (
