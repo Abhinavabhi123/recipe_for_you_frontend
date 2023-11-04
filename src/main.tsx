@@ -5,12 +5,11 @@ import { Provider } from "react-redux";
 import store from "./redux/store.ts";
 import "./index.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-console.log(import.meta.env.VITE_GOOGLE_CLIENT_ID < "gjsdbng");
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <GoogleOAuthProvider clientId={`${import.meta.env.VITE_GOOGLE_CLIENT_ID}`}>
     <Provider store={store}>
-      <App/>
+      <App />
     </Provider>
   </GoogleOAuthProvider>
 );

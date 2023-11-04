@@ -20,5 +20,10 @@ export const getRecipe=(id:number)=>{
 export const addFavorite =(id:number,userId:string)=>{
   return UserAxios.post("/addRecipeFav",{id,userId})
 }
+export const favoriteRecipes =(id:string,userId:string)=>{
+  return UserAxios.get("/favoriteRecipes",{
+    params: { id, userId },
+  })
+}
 
 // export{getAllProducts,UserLogin,getRecipe}

@@ -24,6 +24,9 @@ export default function Navbar() {
   const userDetails = useSelector((state: Args) => {
     return state;
   });
+  // if(!userDetails){
+  //   localStorage.removeItem("recipes")
+  // }
   useEffect(() => {
     if (userDetails) {
       setUserData(userDetails);

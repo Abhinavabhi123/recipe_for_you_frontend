@@ -18,6 +18,11 @@ export default function Card({ values }: Values) {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [favorite, setFavorite] = useState<boolean>(false);
   const [changed, setChanged] = useState<boolean>(false);
+
+  const userId = useSelector((state: Args) => {
+    return state.id;
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -33,18 +38,15 @@ export default function Card({ values }: Values) {
         }
       });
     }
-  }, [changed, values.id]);
+  }, [changed, values.id,userId]);
 
-  const userId = useSelector((state: Args) => {
-    return state.id;
-  });
+
   const addToFav = async (id: number) => {
     const cookie: string | undefined = Cookies.get("jwtToken");
     if (cookie) {
       addFavorite(id, userId)
         .then((response) => {
           if (response.status === 200) {
-            console.log(response.data, "popop");
             localStorage.setItem("recipes", response?.data?.recipes);
           }
         })
@@ -66,7 +68,7 @@ export default function Card({ values }: Values) {
   return !openModal ? (
     <div className="w-full h-auto gap-4 p-4 md:h-84 bg-white rounded-lg shadow-sm shadow-gray-500 flex flex-col justify-around items-center px-4">
       <div className="flex justify-end w-full h-10">
-        {!favorite ? (
+        {!favorite ?(
           <FiHeart
             onClick={() => {
               addToFav(values?.id);

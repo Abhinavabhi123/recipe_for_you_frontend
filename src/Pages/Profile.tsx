@@ -4,7 +4,7 @@ import ProfileRight from "../Components/Profile/ProfileRight";
 
 export default function Profile() {
   return (
-    <div className="w-full h-screen flex flex-col md:flex-row mt-5 items-center justify-around">
+    <div className="w-full h-fit flex flex-col md:flex-row mt-5 items-center justify-around">
         <ProfileLeft/>
         <ProfileRight/>
     </div>
