@@ -8,15 +8,26 @@ export default function Filter() {
   const sideBarOpen = () => {
     setOpen(!open);
   };
-  console.log(open, "open");
+  // const [checkedRadio, setCheckedRadio] =useState<string>('check1');
+
+  // const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+  //   setCheckedRadio(event.target.value);
+  // };
 
   return (
-    // ${
-    //   open ? "absolute" : "relative"
-    // }
     <div
       className={`h-[30rem]  hidden sm:block md:w-44 w-16 lg:w-72  rounded-br-md bg-slate-200 ps-5 sm:p-1 p-7`}
     >
+      <form className="p-7 hidden md:block">
+        {/* <div>
+        <input id='check1' type='radio' className='resize-y w-4 h-4' checked={checkedRadio === 'check1'} onChange={handleChange} />
+        <label htmlFor='check1' className='ms-1'>Liked</label>
+      </div>
+      <div>
+        <input id='check2' type='radio' className='resize-y w-4 h-4' checked={checkedRadio === 'check2'} onChange={handleChange} />
+        <label htmlFor='check2' className='ps-1'>Not Liked</label>
+      </div> */}
+      </form>
       <div
         className="md:hidden block hover:bg-slate-300 p-2 rounded-md ps-4"
         onClick={sideBarOpen}

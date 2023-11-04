@@ -24,7 +24,7 @@ interface Data{
 export default function Recipe_Modal({ modalHandler, values }: Modal) {
   window.scrollTo(0, 0);
  
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [modalData, setModalDAta] = useState<Data>({
     nutations:[{
       name:"",
@@ -49,8 +49,8 @@ export default function Recipe_Modal({ modalHandler, values }: Modal) {
     }
   }, [values.id]);
   return (
-    <div className="absolute flex-wrap inset-0 h-screen bg-black bg-opacity-25 backdrop-blur-sm flex  items-center justify-center">
-      <div className="bg-white flex flex-col mt-4 p-2 rounded-2xl w-full mx-5 ">
+    <div className="absolute flex-wrap inset-0  bg-black bg-opacity-25 backdrop-blur-sm flex  justify-center">
+      <div className="bg-white flex flex-col mt-4 p-2 h-fit rounded-2xl w-full mx-5 ">
         <div className="w-full flex justify-end pe-3 border-b border-gray-300">
           <h1
             className="font-thin text-center text-xl text-gray-700 cursor-pointer"
@@ -61,7 +61,7 @@ export default function Recipe_Modal({ modalHandler, values }: Modal) {
         </div>
         {/* Data container div */}
         {!loading ? (
-          <div className="w-full flex flex-col md:flex-row  justify-center pe-3">
+          <div className="w-full flex flex-col md:flex-row  justify-center">
             <div className="w-full md:w-[30%] bg-transparent flex flex-col sm:justify-center items-center p-5">
               <p className="mb-2 mx-4 font-semibold">{values.title}</p>
               <img

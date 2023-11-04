@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import person from "../../assets/person.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { IoMdMenu } from "react-icons/io";
 import Cookies from "js-cookie";
 import Login from "../Login/Login";
@@ -10,6 +10,7 @@ import { Args, userActions } from "../../redux/userAuth";
 export default function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const currentPath = useLocation().pathname;
   const [open, setOpen] = useState<boolean>(false);
   const [loginOpen, setLoginOpen] = useState<boolean>(false);
   const [loginClose, setLoginClose] = useState(false);
@@ -29,8 +30,6 @@ export default function Navbar() {
     }
   }, [userDetails]);
 
-  console.log(userData, "userData");
-
   const menuHandler = () => {
     setOpen(!open);
   };
@@ -44,6 +43,7 @@ export default function Navbar() {
   };
   const logoutHandler = () => {
     Cookies.remove("jwtToken");
+    localStorage.removeItem("recipes");
     dispatch(
       userActions.userLogout({
         userName: "",
@@ -57,7 +57,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className=" w-full h-20 bg-primary flex items-center  justify-between px-8 drop-shadow-md">
+    <div className=" w-full h-20 bg-primary flex items-center justify-between px-8 drop-shadow-md">
       <img
         src="https://icon-library.com/images/recipe-icon-png/recipe-icon-png-8.jpg"
         className="w-16 h-auto cursor-pointer"
@@ -65,13 +65,13 @@ export default function Navbar() {
       />
       <ul className="hidden items-center gap-4 md:flex justify-center">
         <li
-          className="cursor-pointer font-serif p-2 rounded-md hover:bg-slate-200"
+          className={`cursor-pointer font-serif p-2 rounded-md hover:bg-slate-200  ${currentPath === "/" ? "active" : ""}`}
           onClick={() => navigate("/")}
         >
-          HOME
+          HOME  
         </li>
         <li
-          className="cursor-pointer font-serif p-2 rounded-md hover:bg-slate-200"
+          className={`cursor-pointer font-serif p-2 rounded-md hover:bg-slate-200 ${currentPath === "/recipes" ? "active" : ""}`}
           onClick={() => navigate("/recipes")}
         >
           RECIPES

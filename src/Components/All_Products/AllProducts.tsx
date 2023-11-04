@@ -6,6 +6,7 @@ import Spinner from "../Loader/Spinner";
 import Filter from "../Filter_Seciton/Filter.js";
 import Input from "../SearchInput/Input.js";
 import Empty from "../../assets/Recipe book-pana.svg";
+// import Pagination from "../Pagination/Pagination.js";
 
 type Results = {
   id: number;
@@ -140,6 +141,7 @@ export default function AllProducts() {
   const [products, setProducts] = useState<Results>([]);
   const [result, setResult] = useState<Results>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [limit, setLImit] = useState<string>("all");
   // const [search, setSearch] = useState<string>("");
   useEffect(() => {
     setLoading(true);
@@ -172,26 +174,57 @@ export default function AllProducts() {
   // Searching contents
   const searchHandler = (search: string) => {
     const result = filterData(results, search);
-    result ? setResult(result) : setResult(products);
+    if(result && search!==""){
+      setResult(result)
+    }else{
+       sortHandler(limit)
+    }
   };
   const filterData = (data: Results, searchString: string) => {
-    const regex = new RegExp(searchString, "i");
-    return data.filter((item) => regex.test(item.title));
+
+      const regex = new RegExp(searchString, "i");
+      return data.filter((item) => regex.test(item.title));
   };
 
+  const sortHandler = (e: React.ChangeEvent<HTMLSelectElement> | string) => {
+    let value;
+    typeof e == "string" ? (value = e) : (value = e.target.value);  
+
+    setLImit(value);
+    switch (value) {
+      case "all":
+        setResult(products);
+        break;
+      case "10":
+        setResult(products.slice(0, 10));
+        break;
+      case "25":
+        setResult(products.slice(0, 25));
+        break;
+      case "100":
+        setResult(products.slice(0, 100));
+        break;
+      default:
+        setResult(products);
+        break;
+    }
+  };
 
   return (
     <div>
       <div className=" h-20 flex items-center border-b justify-around">
         <div className="  gap-3 hidden sm:flex">
           <p>Sort :</p>
-          <select className="rounded-sm w-44 border-2 border-black group">
+          <select
+            onChange={sortHandler}
+            className="rounded-sm w-44 border-2 border-black group"
+          >
             {/* <option  className="group-[]:hidden">Select for Sorting</option> */}
-            <option value="">All</option>
-            <option value="">10</option>
-            <option value="">25</option>
-            <option value="">50</option>
-            <option value="">100</option>
+            <option value="all">All</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
           </select>
         </div>
         {/* Searching */}
@@ -200,18 +233,21 @@ export default function AllProducts() {
         </div>
         {/*  */}
       </div>
+      {/* <div className="w-full h-fit flex md:ps-56 m-0   justify-center">
+        {result.length > 0 && <Pagination />}
+      </div> */}
       <div className="w-full min-h-[30rem]  bg-transparent flex  ">
         <Filter />
         {loading ? (
           <Spinner />
         ) : (
-          <div className="h-full relative  md:w-[82%] w-full md:gap-6 bg-trans grid m-auto p-10 grid-cols-1 gap-4 min-[409px]:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="h-full  md:w-[82%] w-full md:gap-6 bg-transparent grid m-auto p-10 grid-cols-1 gap-4 min-[409px]:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {result.length > 0 ? (
               result.map((product, index) => (
                 <Card key={index} values={product} />
               ))
             ) : (
-              <div className="w-full absolute  h-full flex justify-center items-center">
+              <div className="w-[74vw] h-full flex justify-center items-center">
                 <img
                   className="w-52 md:w-96 h-auto"
                   src={Empty}

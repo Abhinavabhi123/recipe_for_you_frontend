@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { UserLogin } from "../../API/recipeApi.js";
-import { showSuccessToast } from "../../Toaster/Toast.js";
+import { showSuccessToast } from "../Toaster/Toast.js";
 import { Toaster } from "react-hot-toast";
 import { DecodedToken } from "../../Middleware/AuthMiddleware.js";
 import { userActions } from "../../redux/userAuth.js";
@@ -33,9 +33,8 @@ export default function Login({ setLoginClose,setLogout }: LoginClose) {
       UserLogin(userData).then((response) => {
         if (response?.status === 200) {
           setLogout(false);
-          showSuccessToast(response?.data?.message);
+          showSuccessToast("response?.data?.message");
           console.log(response.data,"data");
-          
           localStorage.setItem("recipes",response?.data?.userData?.recipes)
           setLoginClose(true);
           const cookieData = jwtDecode(
