@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import person from "../../assets/person.png";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { IoMdMenu } from "react-icons/io";
 import Cookies from "js-cookie";
 import Login from "../Login/Login";
 import { useSelector, useDispatch } from "react-redux";
 import { Args, userActions } from "../../redux/userAuth";
+import { showSuccessToast } from "../Toaster/Toast";
+import { Toaster } from "react-hot-toast";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -24,9 +26,7 @@ export default function Navbar() {
   const userDetails = useSelector((state: Args) => {
     return state;
   });
-  // if(!userDetails){
-  //   localStorage.removeItem("recipes")
-  // }
+
   useEffect(() => {
     if (userDetails) {
       setUserData(userDetails);
@@ -37,7 +37,6 @@ export default function Navbar() {
     setOpen(!open);
   };
   const showLogin = () => {
-    console.log("Clicked");
     setLoginClose(false);
     setLoginOpen(!loginOpen);
   };
@@ -45,6 +44,7 @@ export default function Navbar() {
     setLogout((prev) => !prev);
   };
   const logoutHandler = () => {
+    showSuccessToast("Logged Out");
     Cookies.remove("jwtToken");
     localStorage.removeItem("recipes");
     dispatch(
@@ -55,30 +55,37 @@ export default function Navbar() {
         image: "",
       })
     );
-    navigate("/")
+    navigate("/");
     setLogout(false);
   };
 
   return (
+    // NavBar
     <div className=" w-full h-20 bg-primary flex items-center justify-between px-8 drop-shadow-md">
       <img
         src="https://icon-library.com/images/recipe-icon-png/recipe-icon-png-8.jpg"
         className="w-16 h-auto cursor-pointer"
         alt="logo"
+        onClick={() => navigate("/")}
       />
       <ul className="hidden items-center gap-4 md:flex justify-center">
         <li
-          className={`cursor-pointer font-serif p-2 rounded-md hover:bg-slate-200  ${currentPath === "/" ? "active" : ""}`}
+          className={`cursor-pointer font-serif p-2 rounded-md hover:bg-slate-200  ${
+            currentPath === "/" ? "active" : ""
+          }`}
           onClick={() => navigate("/")}
         >
-          HOME  
+          HOME
         </li>
         <li
-          className={`cursor-pointer font-serif p-2 rounded-md hover:bg-slate-200 ${currentPath === "/recipes" ? "active" : ""}`}
+          className={`cursor-pointer font-serif p-2 rounded-md hover:bg-slate-200 ${
+            currentPath === "/recipes" ? "active" : ""
+          }`}
           onClick={() => navigate("/recipes")}
         >
           RECIPES
         </li>
+        {/* If user loggedIn then change the button */}
         {!userData.email ? (
           <li className="cursor-pointer" onClick={showLogin}>
             <button
@@ -110,7 +117,7 @@ export default function Navbar() {
                 <ul className="flex w-full items-center flex-col gap-2 justify-center text-center ">
                   <li className="hover:bg-slate-300 w-full">
                     <button
-                      className=" px-2  p-1 rounded-md"
+                      className=" px-2  p-1 rounded-md "
                       onClick={() => {
                         navigate("/profile");
                         setLogout(false);
@@ -134,6 +141,7 @@ export default function Navbar() {
           </>
         )}
       </ul>
+      {/* responsive Navbar design  */}
       <div className="flex md:hidden" onClick={menuHandler}>
         <IoMdMenu size={20} />
       </div>
@@ -142,7 +150,7 @@ export default function Navbar() {
           open ? "flex" : "hidden"
         } w-[50%] min-w-32 h-28 justify-between rounded-lg bg-slate-300 absolute right-0 top-20 z-2 md:hidden`}
       >
-        <ul className="flex w-full  flex-col items-center gap-3 justify-center bg-">
+        <ul className="flex w-full  flex-col items-center justify-center ">
           <li
             className="cursor-pointer w-full  text-center text-white"
             onClick={() => {
@@ -161,6 +169,15 @@ export default function Navbar() {
           >
             RECIPES
           </li>
+          <li className="cursor-pointer">
+            <button
+              type="button"
+              className=" px-2  p-1 rounded-md"
+              onClick={logoutHandler}
+            >
+              Logout
+            </button>
+          </li>
           {!userData.email ? (
             <li className="cursor-pointer">
               <img src={`${person}`} className="w-9" alt="person logo" />
@@ -177,6 +194,7 @@ export default function Navbar() {
           )}
         </ul>
       </div>
+      <Toaster />
     </div>
   );
 }

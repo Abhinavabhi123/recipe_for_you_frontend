@@ -3,6 +3,7 @@ import { Values } from "../ProductCard/Card";
 import { getRecipe } from "../../API/recipeApi";
 import Spinner from "../Loader/Spinner";
 import RightSide from "./RightSide";
+import { showErrorToast } from "../Toaster/Toast";
 
 interface Modal extends Values {
   modalHandler: () => void;
@@ -45,12 +46,16 @@ export default function Recipe_Modal({ modalHandler, values }: Modal) {
           setModalDAta(response?.data);
           setLoading(false);
         }
-      });
+      }).catch((error)=>{
+        console.error(error);
+        showErrorToast(error?.response?.data?.message)
+      })
     }
   }, [values.id]);
   return (
     <div className="absolute flex-wrap inset-0  bg-black bg-opacity-25 backdrop-blur-sm flex  justify-center">
       <div className="bg-white flex flex-col mt-4 p-2 h-fit rounded-2xl w-full mx-5 ">
+        {/* top section */}
         <div className="w-full flex justify-end pe-3 border-b border-gray-300">
           <h1
             className="font-thin text-center text-xl text-gray-700 cursor-pointer"
@@ -78,6 +83,7 @@ export default function Recipe_Modal({ modalHandler, values }: Modal) {
                 ))}
               </div>
             </div>
+          {/* Right side of the Modal  */}
            <RightSide ingredients={modalData.ingredients} instructions={modalData.instructions}/>
           </div>
         ) : (

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Args } from "../../redux/userAuth";
 import RecipeCard from "../ProductCard/RecipeCard";
 import Spinner from "../Loader/Spinner";
+import { showErrorToast } from "../Toaster/Toast";
 
 interface Recipes {
   image: string;
@@ -20,7 +21,7 @@ export default function ProfileRight() {
   const items = localStorage.getItem("recipes");
 
  
-
+// Fetching favorite recipe
   useEffect(() => {
     try {
       if (items && userId) {
@@ -33,6 +34,7 @@ export default function ProfileRight() {
           })
           .catch((err) => {
             console.error(err);
+            showErrorToast(err?.response?.data?.message)
           });
       }
     } catch (error) {
@@ -50,7 +52,7 @@ export default function ProfileRight() {
           {!loading ? (
             recipes.map((recipe, i) => <RecipeCard recipe={recipe} key={i} />)
           ) : (
-            <div className="w-full h-52 flex justify-center items-center md:ps-[16em] min-[490px]:ps-[10rem] sm:ps-[50%] lg:ps-[20rem] xl:ps-[30rem]">
+            <div className="w-full h-64 flex justify-center items-center md:ps-[16em] min-[490px]:ps-[10rem] sm:ps-[50%] lg:ps-[20rem] xl:ps-[30rem]">
               <Spinner />
             </div>
           )}

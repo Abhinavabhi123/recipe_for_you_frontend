@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
 type Slides = {
@@ -44,7 +44,6 @@ export default function Slider() {
   };
 
   return (
-    // <div className="">
       <div className="max-w-[1400px] max-h-[880px] mt-14 h-[500px] w-full m-auto py-16 px-4 relative group ">
         <div
           style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
@@ -70,6 +69,5 @@ export default function Slider() {
           ))}
         </div>
       </div>
-    // </div>
   );
 }

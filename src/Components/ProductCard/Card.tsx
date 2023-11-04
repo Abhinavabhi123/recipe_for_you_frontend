@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { addFavorite } from "../../API/recipeApi";
 import { useSelector } from "react-redux";
 import { Args } from "../../redux/userAuth";
+import { showErrorToast, showSuccessToast } from "../Toaster/Toast";
 
 export type Values = {
   values: {
@@ -47,6 +48,7 @@ export default function Card({ values }: Values) {
       addFavorite(id, userId)
         .then((response) => {
           if (response.status === 200) {
+            showSuccessToast("Recipe added to favorite");
             localStorage.setItem("recipes", response?.data?.recipes);
           }
         })
@@ -55,9 +57,10 @@ export default function Card({ values }: Values) {
         })
         .catch((error) => {
           console.error(error);
+          showErrorToast(error?.response?.data?.message)
         });
     } else {
-      console.log("not");
+     showErrorToast("Please Login to add recipe favorite")
     }
   };
 

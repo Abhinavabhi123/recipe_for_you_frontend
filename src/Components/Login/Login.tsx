@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { UserLogin } from "../../API/recipeApi.js";
-import { showSuccessToast } from "../Toaster/Toast.js";
+import { showErrorToast, showSuccessToast } from "../Toaster/Toast.js";
 import { Toaster } from "react-hot-toast";
 import { DecodedToken } from "../../Middleware/AuthMiddleware.js";
 import { userActions } from "../../redux/userAuth.js";
@@ -32,9 +32,8 @@ export default function Login({ setLoginClose,setLogout }: LoginClose) {
     if (Object.values(userData).some((value) => value !== "")) {
       UserLogin(userData).then((response) => {
         if (response?.status === 200) {
+          showSuccessToast(response?.data?.message);
           setLogout(false);
-          showSuccessToast("response?.data?.message");
-          console.log(response.data,"data");
           localStorage.setItem("recipes",response?.data?.userData?.recipes)
           setLoginClose(true);
           const cookieData = jwtDecode(
@@ -50,19 +49,20 @@ export default function Login({ setLoginClose,setLogout }: LoginClose) {
           );
           Cookies.set("jwtToken", response?.data?.jwtToken);
         }
-      });
+      }).catch((error)=>{
+        showErrorToast(error?.response?.data?.message)
+        console.error(error);
+      })
     }
   }, [userData]);
 
   return (
-    <div className="right-0 top-16 absolute">
+    <div className="right-4 top-16 absolute">
       <GoogleLogin
         onSuccess={(credentialResponse) => {
           const decoded: DecodedType = jwtDecode(
             credentialResponse.credential?.toString() || ""
           );
-          console.log(decoded);
-
           setUserData({
             name: decoded?.given_name,
             email: decoded?.email,
@@ -70,7 +70,7 @@ export default function Login({ setLoginClose,setLogout }: LoginClose) {
           });
         }}
         onError={() => {
-          console.log("Login Failed");
+          showErrorToast("Login Failed");
         }}
       />
       <Toaster />

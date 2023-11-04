@@ -41,13 +41,13 @@ export default function Filter({ setResult, results }: Props) {
 
   const clearFilter = () => {
     setResult(results);
-    setOpen(false)
+    setOpen(false);
     setSelectedOption("");
   };
 
   return (
     <div
-      className={`h-[30rem]   hidden sm:block md:w-44 w-16 lg:w-72  rounded-br-md bg-slate-200 ps-5 sm:p-1 p-7`}
+      className={`h-[30rem]  block md:w-44 w-16 lg:w-72  rounded-br-md bg-slate-200 ps-5 sm:p-1 p-7`}
     >
       <div className="p-7 hidden md:flex flex-col gap-3">
         <label className="flex items-center">
@@ -78,7 +78,7 @@ export default function Filter({ setResult, results }: Props) {
           Clear Filter
         </button>
       </div>
-    {/* side bar open button */}
+      {/* side bar open button */}
       <div
         className="md:hidden block hover:bg-slate-300  max-[624px]:p-0 sm:p-2 rounded-md ps-4 "
         onClick={sideBarOpen}
