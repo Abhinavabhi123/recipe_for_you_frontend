@@ -44,7 +44,7 @@ export default function Slider() {
   };
 
   return (
-      <div className="max-w-[1400px] max-h-[880px] mt-14 h-[500px] w-full m-auto py-16 px-4 relative group ">
+      <div className="max-w-[1400px] max-h-[880px] md:mt-14 h-[500px] w-full m-auto py-16 px-4 relative group mt-28">
         <div
           style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
           className="w-full h-full rounded-2xl bg-center bg-cover duration-500"

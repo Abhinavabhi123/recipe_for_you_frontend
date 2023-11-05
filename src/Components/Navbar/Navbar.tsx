@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import person from "../../assets/person.png";
+// import person from "../../assets/person.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoMdMenu } from "react-icons/io";
 import Cookies from "js-cookie";
@@ -35,8 +35,11 @@ export default function Navbar() {
 
   const menuHandler = () => {
     setOpen(!open);
+    // setLoginOpen(open? false :true)
   };
   const showLogin = () => {
+    console.log("here");
+
     setLoginClose(false);
     setLoginOpen(!loginOpen);
   };
@@ -44,6 +47,8 @@ export default function Navbar() {
     setLogout((prev) => !prev);
   };
   const logoutHandler = () => {
+    console.log("ooooo");
+
     showSuccessToast("Logged Out");
     Cookies.remove("jwtToken");
     localStorage.removeItem("recipes");
@@ -145,6 +150,11 @@ export default function Navbar() {
       <div className="flex md:hidden" onClick={menuHandler}>
         <IoMdMenu size={20} />
       </div>
+      {loginOpen &&  !loginClose &&(
+        <div className="mt-2 absolute right-0 top-3">
+          <Login setLoginClose={setLoginClose} setLogout={setLogout} />
+        </div>
+      )}
       <div
         className={`${
           open ? "flex" : "hidden"
@@ -169,21 +179,42 @@ export default function Navbar() {
           >
             RECIPES
           </li>
-          <li className="cursor-pointer">
-            <button
-              type="button"
-              className=" px-2  p-1 rounded-md"
-              onClick={logoutHandler}
-            >
-              Logout
-            </button>
-          </li>
+
           {!userData.email ? (
-            <li className="cursor-pointer">
-              <img src={`${person}`} className="w-9" alt="person logo" />
-            </li>
+            <>
+              <li className="cursor-pointer">
+                <button
+                  onClick={() => {
+                    showLogin();
+                    menuHandler();
+                  }}
+                  type="button"
+                  className="bg-violet-400 px-3 py-1 rounded-md hover:bg-violet-700 hover:text-white"
+                >
+                  Login
+                </button>
+              </li>
+            </>
           ) : (
-            <li className="cursor-pointer flex justify-center items-center gap-3">
+            <li className="cursor-pointer">
+              <button
+                type="button"
+                className=" px-2  p-1 rounded-md"
+                onClick={logoutHandler}
+              >
+                Logout
+              </button>
+            </li>
+          )}
+          {!userData.email ? (
+            ""
+          ) : (
+            <li
+              className="cursor-pointer flex justify-center items-center gap-3"
+              onClick={() => {
+                navigate("/profile");
+              }}
+            >
               <img
                 src={`${userData.image}`}
                 className="w-6 rounded-full"
