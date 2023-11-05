@@ -151,7 +151,7 @@ export default function Navbar() {
         <IoMdMenu size={20} />
       </div>
       {loginOpen &&  !loginClose &&(
-        <div className="mt-2 absolute right-0 top-3">
+        <div className="mt-2 block md:hidden absolute right-0 top-3">
           <Login setLoginClose={setLoginClose} setLogout={setLogout} />
         </div>
       )}
