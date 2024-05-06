@@ -6,7 +6,7 @@ import { useEffect } from "react";
 function App() {
   useEffect(()=>{
     window.addEventListener("message", message => {
-      console.log(message.data) // Wayne is coming!!!
+      console.log(message.data,"message") // Wayne is coming!!!
     });
   },[])
   return (
