@@ -4,7 +4,9 @@ import { useEffect } from "react";
 
 function App() {
   useEffect(() => {
-    console.log(window);
+    window.addEventListener("message", message => {
+      alert(message.data) 
+    });
   }, []);
   return (
     <>
