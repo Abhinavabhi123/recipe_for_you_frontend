@@ -1,22 +1,19 @@
-import {BrowserRouter as Router,Routes,Route}from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Client from "./Routes/Client";
 import { useEffect } from "react";
 
-
 function App() {
-  useEffect(()=>{
-    window.addEventListener("message", message => {
-      console.log(message.data,"message") // Wayne is coming!!!
-    });
-  },[])
+  useEffect(() => {
+    console.log(window);
+  }, []);
   return (
     <>
-    <Router>
-     <Routes>
-       <Route path="/*" element={<Client/>}/>
-     </Routes>
-    </Router>
-   </>
+      <Router>
+        <Routes>
+          <Route path="/*" element={<Client />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
