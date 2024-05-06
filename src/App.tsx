@@ -1,8 +1,14 @@
 import {BrowserRouter as Router,Routes,Route}from "react-router-dom"
 import Client from "./Routes/Client";
+import { useEffect } from "react";
 
 
 function App() {
+  useEffect(()=>{
+    window.addEventListener("message", message => {
+      console.log(message.data) // Wayne is coming!!!
+    });
+  },[])
   return (
     <>
     <Router>
